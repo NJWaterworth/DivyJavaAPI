@@ -1,0 +1,15 @@
+<!-- Ant build script for compiling and running the AWS Java SDK DynamoDB sample.
+     Don't forget to fill in your AWS access credentials in (~/.aws/credentials)
+     before trying to run it.  -->
+<project name="DivyAPITest" default="run" basedir=".">
+    <path id="aws.java.sdk.classpath">
+        <fileset dir="C:/Program Files/aws-java-sdk-1.11.423/third-party" includes="**/*.jar"/>
+        <fileset dir="C:/Program Files/aws-java-sdk-1.11.423/lib" includes="**/*.jar"/>
+        <pathelement location="."/>
+    </path>
+
+    <target name="run">
+        <javac srcdir="." destdir="." verbose="true" classpathref="aws.java.sdk.classpath"/>
+        <java classname="AmazonDynamoDBSample" classpathref="aws.java.sdk.classpath" fork="true"/>
+    </target>
+</project>
