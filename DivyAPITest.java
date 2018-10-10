@@ -26,7 +26,7 @@ import com.amazonaws.services.dynamodbv2.model.ScanResult;
 import com.amazonaws.services.dynamodbv2.model.TableDescription;
 import com.amazonaws.services.dynamodbv2.util.TableUtils;
 
-public class TestAPI{
+public class DivyAPITest{
 	//Declaring DB object
     static AmazonDynamoDB dynamoDB;
 	
@@ -56,24 +56,24 @@ public class TestAPI{
             // Describe our new table
             DescribeTableRequest describeTableRequest = new DescribeTableRequest().withTableName("Posts");
             TableDescription tableDescription = dynamoDB.describeTable(describeTableRequest).getTable();
+            String tableName = describeTableRequest.getTableName();
             System.out.println("Table Description: " + tableDescription);
 
             // Add an item
-            /*Map<String, AttributeValue> item = newItem(1324, 1543796989, "This is a test caption", {95453}, {3255}, {4365}, "", "public");
+            Map<String, AttributeValue> item = newItem(1324, 1543796989, "This is a test caption", 95453, 3255, 4365, " ", "public");
             PutItemRequest putItemRequest = new PutItemRequest(tableName, item);
             PutItemResult putItemResult = dynamoDB.putItem(putItemRequest);
-            System.out.println("Result: " + putItemResult);*/
+            System.out.println("Result: " + putItemResult);
 
-            // Scan items for movies with a year attribute greater than 1985
-            /*HashMap<String, Condition> scanFilter = new HashMap<String, Condition>();
+            // Scan items for posts with a id attribute greater than 1324
+            HashMap<String, Condition> scanFilter = new HashMap<>();
             Condition condition = new Condition()
                 .withComparisonOperator(ComparisonOperator.GT.toString())
-                .withAttributeValueList(new AttributeValue().withN("1985"));
-            scanFilter.put("year", condition);
+                .withAttributeValueList(new AttributeValue().withN("1324"));
+            scanFilter.put("timestamp", condition);
             ScanRequest scanRequest = new ScanRequest(tableName).withScanFilter(scanFilter);
             ScanResult scanResult = dynamoDB.scan(scanRequest);
-            System.out.println("Result: " + scanResult);*/
-
+            System.out.println("Result: " + scanResult);
         } catch (AmazonServiceException ase) {
             System.out.println("Caught an AmazonServiceException, which means your request made it "
                     + "to AWS, but was rejected with an error response for some reason.");
@@ -90,13 +90,16 @@ public class TestAPI{
         }
     }
 
-    private static Map<String, AttributeValue> newItem(String name, int year, String rating, String... fans) {
-        Map<String, AttributeValue> item = new HashMap<String, AttributeValue>();
-        item.put("name", new AttributeValue(name));
-        item.put("year", new AttributeValue().withN(Integer.toString(year)));
-        item.put("rating", new AttributeValue(rating));
-        item.put("fans", new AttributeValue().withSS(fans));
-
+    private static Map<String, AttributeValue> newItem(int id, int timeStamp, String caption, int commentIds, int emberIds, int flameIds, String image, String type) {
+        Map<String, AttributeValue> item = new HashMap<>();
+        item.put("id", new AttributeValue().withN(Integer.toString(id)));
+        item.put("timestamp", new AttributeValue().withN(Integer.toString(timeStamp)));
+        item.put("caption", new AttributeValue(caption));
+        item.put("commentids", new AttributeValue().withN(Integer.toString(commentIds)));
+        item.put("embererids", new AttributeValue().withN(Integer.toString(emberIds)));
+        item.put("flamerids", new AttributeValue().withN(Integer.toString(flameIds)));
+        item.put("image", new AttributeValue(image));
+        item.put("type", new AttributeValue(type));
         return item;
     }
 
