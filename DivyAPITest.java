@@ -95,9 +95,9 @@ public class DivyAPITest{
         item.put("id", new AttributeValue().withN(Integer.toString(id)));
         item.put("timestamp", new AttributeValue().withN(Integer.toString(timeStamp)));
         item.put("caption", new AttributeValue(caption));
-        item.put("commentids", new AttributeValue().withN(Integer.toString(commentIds)));
-        item.put("embererids", new AttributeValue().withN(Integer.toString(emberIds)));
-        item.put("flamerids", new AttributeValue().withN(Integer.toString(flameIds)));
+        item.put("commentIds", new AttributeValue().withN(Integer.toString(commentIds)));
+        item.put("embererIds", new AttributeValue().withN(Integer.toString(emberIds)));
+        item.put("flamerIds", new AttributeValue().withN(Integer.toString(flameIds)));
         item.put("image", new AttributeValue(image));
         item.put("type", new AttributeValue(type));
         return item;
