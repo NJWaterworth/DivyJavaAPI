@@ -65,11 +65,11 @@ public class TestAPI{
             PutItemResult putItemResult = dynamoDB.putItem(putItemRequest);
             System.out.println("Result: " + putItemResult);
 
-            // Scan items for posts with a timestamp attribute greater than 1543796989
+            // Scan items for posts with a id attribute greater than 1324
             HashMap<String, Condition> scanFilter = new HashMap<>();
             Condition condition = new Condition()
                 .withComparisonOperator(ComparisonOperator.GT.toString())
-                .withAttributeValueList(new AttributeValue().withN("1543796989"));
+                .withAttributeValueList(new AttributeValue().withN("1324"));
             scanFilter.put("timestamp", condition);
             ScanRequest scanRequest = new ScanRequest(tableName).withScanFilter(scanFilter);
             ScanResult scanResult = dynamoDB.scan(scanRequest);
