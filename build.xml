@@ -10,6 +10,6 @@
 
     <target name="run">
         <javac srcdir="." destdir="." verbose="true" classpathref="aws.java.sdk.classpath"/>
-        <java classname="TestAPI" classpathref="aws.java.sdk.classpath" fork="true"/>
+        <java classname="DivyAPITest" classpathref="aws.java.sdk.classpath" fork="true"/>
     </target>
 </project>

@@ -26,7 +26,7 @@ import com.amazonaws.services.dynamodbv2.model.ScanResult;
 import com.amazonaws.services.dynamodbv2.model.TableDescription;
 import com.amazonaws.services.dynamodbv2.util.TableUtils;
 
-public class TestAPI{
+public class DivyAPITest{
 	//Declaring DB object
     static AmazonDynamoDB dynamoDB;
 	
@@ -60,7 +60,7 @@ public class TestAPI{
             System.out.println("Table Description: " + tableDescription);
 
             // Add an item
-            Map<String, AttributeValue> item = newItem(1324, 1543796989, "This is a test caption", 95453, 3255, 4365, "", "public");
+            Map<String, AttributeValue> item = newItem(1324, 1543796989, "This is a test caption", 95453, 3255, 4365, " ", "public");
             PutItemRequest putItemRequest = new PutItemRequest(tableName, item);
             PutItemResult putItemResult = dynamoDB.putItem(putItemRequest);
             System.out.println("Result: " + putItemResult);
