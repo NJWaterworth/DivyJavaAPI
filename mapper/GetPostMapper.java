@@ -7,5 +7,6 @@ public class GetPostMapper {
     GetPostOutput output;
     public GetPostOutput mapToOutput(Post post) {
         output.post = post;
+        return output;
     }
 }

@@ -12,9 +12,11 @@ public class PostTranslator implements DDBTranslator {
         // I think theres probably a more generic way to do this but I'm tired.
         // I'll keep thinking about it
         // Dozer????
+        return post;
     }
 
     public Item internalToDynamo(Post post) {
         // Do this too
+        return null;
     }
 }
