@@ -1,5 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
+import java.util.TreeSet;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
@@ -60,7 +62,11 @@ public class DivyAPITest{
             System.out.println("Table Description: " + tableDescription);
 
             // Add an item
-            Map<String, AttributeValue> item = newItem(1324, 1543796989, "This is a test caption", 95453, 3255, 4365, " ", "public");
+			ArrayList<String> cids = new ArrayList<>();
+			cids.add("95423");
+			cids.add("5555");
+
+            Map<String, AttributeValue> item = newItem(1224, 1543795989, "This is another test caption", cids, 3255, 4365, " ", "Public");
             PutItemRequest putItemRequest = new PutItemRequest(tableName, item);
             PutItemResult putItemResult = dynamoDB.putItem(putItemRequest);
             System.out.println("Result: " + putItemResult);
@@ -74,7 +80,9 @@ public class DivyAPITest{
             ScanRequest scanRequest = new ScanRequest(tableName).withScanFilter(scanFilter);
             ScanResult scanResult = dynamoDB.scan(scanRequest);
             System.out.println("Result: " + scanResult);
-        } catch (AmazonServiceException ase) {
+        } 
+		//Catching errors from amazon server side
+		catch (AmazonServiceException ase) {
             System.out.println("Caught an AmazonServiceException, which means your request made it "
                     + "to AWS, but was rejected with an error response for some reason.");
             System.out.println("Error Message:    " + ase.getMessage());
@@ -82,7 +90,9 @@ public class DivyAPITest{
             System.out.println("AWS Error Code:   " + ase.getErrorCode());
             System.out.println("Error Type:       " + ase.getErrorType());
             System.out.println("Request ID:       " + ase.getRequestId());
-        } catch (AmazonClientException ace) {
+        } 
+		//Getting errors from client side 
+		catch (AmazonClientException ace) {
             System.out.println("Caught an AmazonClientException, which means the client encountered "
                     + "a serious internal problem while trying to communicate with AWS, "
                     + "such as not being able to access the network.");
@@ -90,17 +100,16 @@ public class DivyAPITest{
         }
     }
 
-    private static Map<String, AttributeValue> newItem(int id, int timeStamp, String caption, int commentIds, int emberIds, int flameIds, String image, String type) {
+    private static Map<String, AttributeValue> newItem(int id, int timeStamp, String caption, TreeSet<String> commentIds, TreeSet<String> emberIds, TreeSet<String> flameIds, String image, String type) {
         Map<String, AttributeValue> item = new HashMap<>();
         item.put("id", new AttributeValue().withN(Integer.toString(id)));
         item.put("timestamp", new AttributeValue().withN(Integer.toString(timeStamp)));
         item.put("caption", new AttributeValue(caption));
-        item.put("commentIds", new AttributeValue().withN(Integer.toString(commentIds)));
-        item.put("embererIds", new AttributeValue().withN(Integer.toString(emberIds)));
-        item.put("flamerIds", new AttributeValue().withN(Integer.toString(flameIds)));
+        item.put("commentIds", new AttributeValue().withNS(commentIds));
+        item.put("embererIds", new AttributeValue().withNS(emberIds));
+        item.put("flamerIds", new AttributeValue().withNS(flameIds));
         item.put("image", new AttributeValue(image));
         item.put("type", new AttributeValue(type));
         return item;
     }
-
 }
