@@ -3,6 +3,9 @@ import java.util.Map;
 import java.util.List;
 import java.util.TreeSet;
 
+import activity.GetPostActivity;
+import activity.input.GetPostInput;
+import activity.output.GetPostOutput;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.auth.AWSCredentials;
@@ -52,6 +55,14 @@ public class DivyAPITest{
     }
 
     public static void main(String[] args) throws Exception {
+
+        GetPostActivity getPostActivity = new GetPostActivity();
+        GetPostInput input = new GetPostInput();
+        input.id = "1224";
+        GetPostOutput output = getPostActivity.getPost(input);
+        System.out.println(output.post.caption);
+
+        /*
         init();
 
         try {
@@ -98,6 +109,7 @@ public class DivyAPITest{
                     + "such as not being able to access the network.");
             System.out.println("Error Message: " + ace.getMessage());
         }
+        */
     }
 
     private static Map<String, AttributeValue> newItem(int id, int timeStamp, String caption, TreeSet<String> commentIds, TreeSet<String> emberIds, TreeSet<String> flameIds, String image, String type) {
